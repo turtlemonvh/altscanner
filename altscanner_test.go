@@ -56,6 +56,8 @@ func TestShortLines(t *testing.T) {
 	ns := NewAltScanner(shortLinesReader)
 	for ns.Scan() {
 		nlinesFound++
+		assert.Equal(t, 300, len(ns.Bytes()))
+		assert.Equal(t, 300, len(ns.Text()))
 	}
 
 	assert.Equal(t, nlines, nlinesFound)
