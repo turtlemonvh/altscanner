@@ -1,4 +1,4 @@
-# AltScanner
+# AltScanner [![GoDoc](https://godoc.org/github.com/turtlemonvh/altscanner?status.svg)](https://godoc.org/github.com/turtlemonvh/altscanner) [![Build Status](https://travis-ci.org/turtlemonvh/altscanner.png?branch=master)](https://travis-ci.org/turtlemonvh/altscanner)
 
 A version of `bufio.Scanner` that works with lines of arbitrary length.
 
