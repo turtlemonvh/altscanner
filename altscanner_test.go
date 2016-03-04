@@ -13,7 +13,7 @@ var (
 	shortLines      string
 	longLines       string
 	nlines          = 5
-	ncharslonglines = 300001
+	ncharslonglines = 300000
 )
 
 // Create fixtures

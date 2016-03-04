@@ -51,7 +51,6 @@ func (s *AltScanner) Scan() bool {
 
 		if !prefix {
 			// Finished reading this line
-			s.currentLine += "\n"
 			return true
 		}
 	}
