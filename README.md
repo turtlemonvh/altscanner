@@ -8,8 +8,8 @@ If you're getting a `bufio.Scanner: token too long` error, this may be what you 
 
 ## Caveats
 
-* Only the `.Text()` method of the scanner works. 
-* Only breaks on newlines. 
+* Only breaks on newlines.
+* Just appends bytes to a byte slice instead of using [a real buffer](https://golang.org/pkg/bytes/#Buffer).
 
 ## Alternatives
 
