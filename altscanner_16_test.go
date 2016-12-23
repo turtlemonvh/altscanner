@@ -1,6 +1,6 @@
 //+build go1.6
 
-package altscanner
+package altscanner_test
 
 import (
 	"bufio"

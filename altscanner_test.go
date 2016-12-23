@@ -1,9 +1,10 @@
-package altscanner
+package altscanner_test
 
 import (
 	"bufio"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"github.com/turtlemonvh/altscanner"
 	"io"
 	"strings"
 	"testing"
@@ -53,7 +54,7 @@ func TestShortLines(t *testing.T) {
 
 	nlinesFound := 0
 
-	ns := NewAltScanner(shortLinesReader)
+	ns := altscanner.NewAltScanner(shortLinesReader)
 	for ns.Scan() {
 		nlinesFound++
 		assert.Equal(t, 300, len(ns.Bytes()))
@@ -85,7 +86,7 @@ func TestLongLines(t *testing.T) {
 
 	nlinesFound := 0
 
-	ns := NewAltScanner(longLinesReader)
+	ns := altscanner.NewAltScanner(longLinesReader)
 	for ns.Scan() {
 		nlinesFound++
 		assert.Equal(t, ncharslonglines, len(ns.Text()))
