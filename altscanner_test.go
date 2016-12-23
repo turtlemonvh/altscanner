@@ -16,6 +16,10 @@ var (
 	ncharslonglines = 300000
 )
 
+type Bufferable interface {
+	Buffer([]byte, int)
+}
+
 // Create fixtures
 func init() {
 	linestarter := "frog mule horse cat dog mouse " // 30
@@ -112,11 +116,6 @@ func TestLongLinesDefaultScanner(t *testing.T) {
 	assert.True(t, ns.Err() != nil)
 }
 
-/*
-
-// Only works on go>1.6, because that's when the `Scanner.Buffer` method was added
-// https://golang.org/doc/go1.6#minor_library_changes
-
 func TestLongLinesDefaultScannerLargeBytes(t *testing.T) {
 	_, longLinesReader := generateReaders()
 
@@ -124,10 +123,17 @@ func TestLongLinesDefaultScannerLargeBytes(t *testing.T) {
 
     // Should pass
 	ns := bufio.NewScanner(longLinesReader)
+
+	// Only works on go>1.6, because that's when the `Scanner.Buffer` method was added
+	// https://golang.org/doc/go1.6#minor_library_changes
+	if _, ok := interface{}(ns).(Bufferable); !ok {
+		t.Skip("skipping buffered scanner test")
+	}
+
 	ns.Buffer(make([]byte, bufio.MaxScanTokenSize), bufio.MaxScanTokenSize*10)
 	for ns.Scan() {
 		nlinesFound++
-        assert.Equal(t, ncharslonglines, len(ns.Text()))'
+        assert.Equal(t, ncharslonglines, len(ns.Text()))
 	}
 
 	assert.Equal(t, 5, nlinesFound)
@@ -135,4 +141,3 @@ func TestLongLinesDefaultScannerLargeBytes(t *testing.T) {
 	assert.True(t, ns.Err() == nil)
 }
 
-*/
