@@ -6,6 +6,30 @@ A version of `bufio.Scanner` that works with lines of arbitrary length.
 
 If you're getting a `bufio.Scanner: token too long` error, this may be what you want.
 
+## How
+
+If your code used to look like this:
+
+```golang
+import "bufio"
+
+s := bufio.NewScanner(myIoReader)
+for s.Scan() {
+    // Do work
+}
+```
+
+You can now handle very long lines without errors by changing to:
+
+```golang
+import "github.com/turtlemonvh/altscanner"
+
+s := altscanner.NewAltScanner(myIoReader)
+for s.Scan() {
+    // Do work
+}
+```
+
 ## Caveats
 
 * Only breaks on newlines.
