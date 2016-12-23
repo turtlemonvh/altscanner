@@ -47,18 +47,20 @@ However, if you need to be compatible with go<1.6 or you really have no idea abo
 
 ## Performance
 
-It is robust, but not very fast.  The benchmark results below show the performance of reading in 5 lines of content. The lines used in the tests are either 30 bytes (short) or 300K bytes (long).  It is always faster to use `Scanner.Buffer` to adjust the size of the buffer if you are using go1.6+ and you are confident about the max possible size of an line.
+It is robust, but not very fast.  The benchmark results below show the performance of reading in 5 lines of content. The lines used in the tests are either 30 bytes (short) or 300K bytes (long).
 
 ```bash
-$ go test -bench=.
-BenchmarkBufioScannerSmall-8             1000000          1057 ns/op
-BenchmarkBufferedBufioScannerSmall-8     1000000          1083 ns/op
-BenchmarkAltScannerSmall-8               1000000          1786 ns/op
-BenchmarkBufferedBufioScannerLong-8        50000         29559 ns/op
-BenchmarkAltScannerLong-8                   1000       1165943 ns/op
+$ go test -test.bench=Scanner -test.run=^$ -test.benchmem
+BenchmarkBufioScannerSmall-8             1000000          1061 ns/op        4128 B/op          2 allocs/op
+BenchmarkBufferedBufioScannerSmall-8     1000000          1059 ns/op        4128 B/op          2 allocs/op
+BenchmarkAltScannerSmall-8               1000000          1779 ns/op        5824 B/op          8 allocs/op
+BenchmarkBufferedBufioScannerLong-8        50000         28077 ns/op      127008 B/op          6 allocs/op
+BenchmarkAltScannerLong-8                   2000       1142195 ns/op     7032704 B/op         78 allocs/op
 PASS
-ok      github.com/turtlemonvh/altscanner   12.398s
+ok      github.com/turtlemonvh/altscanner   13.458s
 ```
+
+`AltScanner` is significantly slower, has many more allocations, and uses significantly more bytes per operation than the buffer `bufio.Scanner`.  In short: it is always faster to use `Scanner.Buffer` to adjust the size of the buffer if you are using go1.6+ and you are confident about the max possible size of an line.
 
 ## License
 
