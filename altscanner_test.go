@@ -2,7 +2,6 @@ package altscanner_test
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/turtlemonvh/altscanner"
 	"io"
@@ -62,7 +61,6 @@ func TestShortLines(t *testing.T) {
 	}
 
 	assert.Equal(t, nlines, nlinesFound)
-	fmt.Println("ns.Err()", ns.Err())
 	assert.True(t, ns.Err() == nil)
 }
 
@@ -77,7 +75,6 @@ func TestShortLinesDefaultScanner(t *testing.T) {
 	}
 
 	assert.Equal(t, nlines, nlinesFound)
-	fmt.Println("ns.Err()", ns.Err())
 	assert.True(t, ns.Err() == nil)
 }
 
@@ -93,7 +90,6 @@ func TestLongLines(t *testing.T) {
 	}
 
 	assert.Equal(t, nlines, nlinesFound)
-	fmt.Println("ns.Err()", ns.Err())
 	assert.True(t, ns.Err() == nil)
 }
 
@@ -109,6 +105,5 @@ func TestLongLinesDefaultScanner(t *testing.T) {
 	}
 
 	assert.Equal(t, 0, nlinesFound)
-	fmt.Println("ns.Err()", ns.Err())
 	assert.True(t, ns.Err() != nil)
 }

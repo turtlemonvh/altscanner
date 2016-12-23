@@ -4,8 +4,9 @@ package altscanner_test
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/stretchr/testify/assert"
+	"github.com/turtlemonvh/altscanner"
+	"strings"
 	"testing"
 )
 
@@ -29,6 +30,39 @@ func TestLongLinesDefaultScannerLargeBytes(t *testing.T) {
 	}
 
 	assert.Equal(t, 5, nlinesFound)
-	fmt.Println("ns.Err()", ns.Err())
 	assert.True(t, ns.Err() == nil)
 }
+
+func benchBufioScanner(b *testing.B, content string) {
+	for n := 0; n < b.N; n++ {
+		scanner := bufio.NewScanner(strings.NewReader(content))
+		for scanner.Scan() {
+			scanner.Bytes()
+		}
+	}
+}
+
+func benchBufferedBufioScanner(b *testing.B, content string) {
+	for n := 0; n < b.N; n++ {
+		scanner := bufio.NewScanner(strings.NewReader(content))
+		scanner.Buffer(make([]byte, bufio.MaxScanTokenSize), bufio.MaxScanTokenSize*10)
+		for scanner.Scan() {
+			scanner.Bytes()
+		}
+	}
+}
+
+func benchAltScanner(b *testing.B, content string) {
+	for n := 0; n < b.N; n++ {
+		scanner := altscanner.NewAltScanner(strings.NewReader(content))
+		for scanner.Scan() {
+			scanner.Bytes()
+		}
+	}
+}
+
+func BenchmarkBufioScannerSmall(b *testing.B)         { benchBufioScanner(b, shortLines) }
+func BenchmarkBufferedBufioScannerSmall(b *testing.B) { benchBufioScanner(b, shortLines) }
+func BenchmarkAltScannerSmall(b *testing.B)           { benchAltScanner(b, shortLines) }
+func BenchmarkBufferedBufioScannerLong(b *testing.B)  { benchBufioScanner(b, longLines) }
+func BenchmarkAltScannerLong(b *testing.B)            { benchAltScanner(b, longLines) }
